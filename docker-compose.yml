@@ -22,6 +22,11 @@ services:
     networks:
       - boilerplate-network
 
+  database:
+    image: postgis/postgis:14-3.2-alpine
+    environment:
+      POSTGRES_PASSWORD: ChangeMe123
+      POSTGRES_DB: SampleDatabase
 networks:
   boilerplate-network:
     driver: bridge
