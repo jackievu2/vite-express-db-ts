@@ -13,6 +13,6 @@ server.on("request", app);
 // createWebSocketServer(server);
 
 // hard-coded port for simplicity until more flexibility needed
-server.listen(5000, () => {
+server.listen(9001, () => {
   console.log(`API v1 (re)started`);
 });
