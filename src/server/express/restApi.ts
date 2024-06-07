@@ -2,6 +2,8 @@ import packageJSON from "../../../package.json";
 import express, { Application } from "express";
 import cors from "cors";
 import { Request, Response } from "express";
+import { AppDataSource } from "../database/data-source";
+import { SampleEntity } from "../database/entities/sampleTable";
 
 const app: Application = express();
 
@@ -16,6 +18,11 @@ app.get(`/api/v1/version`, (req: Request, res: Response) => {
     envVal: process.env.ENV_VALUE as string, // sample server-side env value
   };
   res.send(respObj);
+});
+app.get(`/api/v1/database`, async (req: Request, res: Response) => {
+  const records = await AppDataSource.getRepository(SampleEntity).find();
+  console.log(records);
+  res.send(records);
 });
 
 app.use(express.static("./.local/vite/dist"));

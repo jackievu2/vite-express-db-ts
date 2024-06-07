@@ -11,22 +11,19 @@ services:
       - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
       - "443:443"
-    networks:
-      - boilerplate-network
 
   express:
     build:
       context: .
       dockerfile: /docker/express/Dockerfile
       target: prod
-    networks:
-      - boilerplate-network
 
-  # database:
-  #   image: postgis/postgis:14-3.2-alpine
-  #   environment:
-  #     POSTGRES_PASSWORD: ChangeMe123
-  #     POSTGRES_DB: SampleDatabase
-networks:
-  boilerplate-network:
-    driver: bridge
+  database:
+    image: postgis/postgis:14-3.2-alpine
+    environment:
+      POSTGRES_PASSWORD: "ChangeMe123"
+      POSTGRES_DB: "SampleDatabase"
+    ports:
+      # For local dev, expose the database outside the docker network in case devs want to
+      # access it on their machine (e.g. HeidiSQL, PostgreSQL Explorer, etc)
+      - "5432:5432"

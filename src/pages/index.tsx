@@ -1,19 +1,22 @@
 import { useState } from "react";
 import styles from "./index.module.css";
-import { ROOT_URL } from "@/constants";
-import { commonExample } from "@/utils/utils";
 
 const HomePage = (): JSX.Element => {
-  const urlWithProxy = `${ROOT_URL}version`;
+  const urlWithProxy = `/api/v1/version`;
   const [data, setData] = useState<RespExampleType | null>(null);
-
-  commonExample();
+  const [databaseData, setDatabaseData] = useState<string>("");
 
   async function getDataFromServer(): Promise<void> {
     const res = await fetch(urlWithProxy);
     const data: RespExampleType = await res.json();
     setData(data);
   }
+
+  // get dataabse data
+  (async () => {
+    const res = await fetch("/api/v1/database");
+    setDatabaseData(await res.json());
+  })();
 
   return (
     <div className={styles.app}>
@@ -22,6 +25,7 @@ const HomePage = (): JSX.Element => {
         Access server using proxy
       </button>
       <p>data : {data?.version}</p>
+      <div>{databaseData}</div>
     </div>
   );
 };

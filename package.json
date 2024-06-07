@@ -16,12 +16,13 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
     "test": "jest",
     "test:all": "npm run lint && npm run tsc && npm run build && npm run test",
-    "docker:services": "bash ./appcompose services up -d database",
-    "docker:services:rebuild": "bash ./appcompose services build database",
-    "docker:services:rebuild:nocache": "bash ./appcompose services build --no-cache database",
+    "docker:services": "docker compose -f docker-compose.yml up -d database",
+    "docker:services:rebuild": "docker compose -f docker-compose.yml build database",
+    "docker:services:rebuild:nocache": "docker compose -f docker-compose.yml build --no-cache database",
     "docker:preview": "docker compose -f docker-compose.yml up -d",
     "docker:preview:rebuild": "docker compose -f docker-compose.yml build",
-    "docker:preview:rebuild:nocache": "docker compose -f docker-compose.yml build --no-cache"
+    "docker:preview:rebuild:nocache": "docker compose -f docker-compose.yml build --no-cache",
+    "migrate:create": "npx typeorm migration:generate -d ./src/server/database/data-source.ts ./src/server/database/migrations/migrate"
   },
   "keywords": [],
   "author": "",
@@ -30,10 +31,12 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "lodash": "^4.17.21",
+    "pg": "^8.12.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router": "^6.23.1",
     "react-router-dom": "^6.23.1",
+    "reflect-metadata": "^0.2.2",
     "typeorm": "^0.3.20"
   },
   "devDependencies": {
